@@ -13,7 +13,7 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    environment: Actions
+    environment: DockerHub
     
     permissions:
       contents: read
@@ -22,6 +22,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Check secrets
+        run: |
+          if [ -z "${{ secrets.DOCKER_USER }}" ]; then
+            echo "::error::DOCKER_USER secret is not set in the 'Actions' environment"
+            exit 1
+          fi
+          if [ -z "${{ secrets.DOCKER_SECRET }}" ]; then
+            echo "::error::DOCKER_SECRET secret is not set in the 'Actions' environment"
+            exit 1
+          fi
+          echo "Secrets are configured correctly"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
