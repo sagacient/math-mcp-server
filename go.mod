@@ -1,4 +1,4 @@
-module github.com/tejzpr/math-mcp-server
+module github.com/Sagacient/math-mcp-server
 
 go 1.25.0
 
